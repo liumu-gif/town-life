@@ -100,3 +100,65 @@ function loop() {
 }
 
 loop();
+// ===== 手机摇杆 =====
+
+const joystick = document.getElementById("joystick");
+const stick = document.getElementById("stick");
+
+let joyActive = false;
+let joyX = 0;
+let joyY = 0;
+
+const center = {
+    x: 60,
+    y: 60
+};
+
+joystick.addEventListener("touchstart", e => {
+    joyActive = true;
+    moveStick(e.touches[0]);
+});
+
+joystick.addEventListener("touchmove", e => {
+    e.preventDefault();
+    moveStick(e.touches[0]);
+});
+
+joystick.addEventListener("touchend", () => {
+
+    joyActive = false;
+
+    joyX = 0;
+    joyY = 0;
+
+    stick.style.left = "35px";
+    stick.style.top = "35px";
+
+});
+
+function moveStick(touch){
+
+    const rect = joystick.getBoundingClientRect();
+
+    let x = touch.clientX - rect.left;
+    let y = touch.clientY - rect.top;
+
+    let dx = x - center.x;
+    let dy = y - center.y;
+
+    let dist = Math.sqrt(dx*dx+dy*dy);
+
+    if(dist>40){
+
+        dx*=40/dist;
+        dy*=40/dist;
+
+    }
+
+    joyX = dx/40;
+    joyY = dy/40;
+
+    stick.style.left=(35+dx)+"px";
+    stick.style.top=(35+dy)+"px";
+
+}
