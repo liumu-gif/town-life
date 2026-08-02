@@ -46,7 +46,14 @@ function update() {
     if (keys["s"] || keys["arrowdown"]) player.y += player.speed;
     if (keys["a"] || keys["arrowleft"]) player.x -= player.speed;
     if (keys["d"] || keys["arrowright"]) player.x += player.speed;
+    
+    if(joyActive){
 
+    player.x += joyX * player.speed;
+
+    player.y += joyY * player.speed;
+
+    }
     // 限制地图范围
     player.x = Math.max(player.size / 2, Math.min(player.x, MAP_WIDTH * TILE - player.size / 2));
     player.y = Math.max(player.size / 2, Math.min(player.y, MAP_HEIGHT * TILE - player.size / 2));
